@@ -83,7 +83,8 @@ namespace esphome {
             uint8_t commandNumber = 0;
 
             for (;;) {
-                if (twc->ChargersConnected() > 0 && current > 6.0) {
+                if (twc->ChargersConnected() > 0 && available_current_ > 6.0) {
+                    ESP_LOGD(TAG, "available_current_ %d\r\n", available_current_);
                     for (uint8_t i = 0; i < twc->ChargersConnected(); i++) {
                         twc->SendHeartbeat(twc->chargers[i]->twcid);
                         if (twc->current_changed_ == true) { twc->current_changed_ = false; };
