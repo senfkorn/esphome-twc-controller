@@ -85,7 +85,13 @@ namespace esphome {
             for (;;) {
                 if (twc->ChargersConnected() > 0) {
                     for (uint8_t i = 0; i < twc->ChargersConnected(); i++) {
-                        twc->SendHeartbeat(twc->chargers[i]->twcid);
+
+
+                        if (current != 0) { twc->SendHeartbeat(twc->chargers[i]->twcid); };
+                        
+
+
+                        
                         if (twc->current_changed_ == true) { twc->current_changed_ = false; };
 
                         vTaskDelay(500+random(50,100)/portTICK_PERIOD_MS);
