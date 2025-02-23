@@ -83,10 +83,11 @@ namespace esphome {
             uint8_t commandNumber = 0;
 
             for (;;) {
-                if (twc->ChargersConnected() > 0 && twc->available_current_ > 6.0) {
+                if (twc->ChargersConnected() > 0) {
                     ESP_LOGD(TAG, "available_current_ %d\r\n", twc->available_current_);
                     for (uint8_t i = 0; i < twc->ChargersConnected(); i++) {
-                        twc->SendHeartbeat(twc->chargers[i]->twcid);
+
+                        if (twc->available_current_ >= 6.0) { twc->SendHeartbeat(twc->chargers[i]->twcid); };
                         if (twc->current_changed_ == true) { twc->current_changed_ = false; };
 
                         vTaskDelay(500+random(50,100)/portTICK_PERIOD_MS);
@@ -237,7 +238,6 @@ namespace esphome {
         void TeslaController::SetCurrent(uint8_t current) {
             if (available_current_ != current) {
                 ESP_LOGD(TAG, "Received current change message, new current %d\r\n", current);
-                ESP_LOGD(TAG, "min_current_ %d\r\n", min_current_);
                 current_changed_ = true;
             }
 
