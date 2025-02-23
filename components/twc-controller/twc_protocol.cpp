@@ -84,7 +84,6 @@ namespace esphome {
 
             for (;;) {
                 if (twc->ChargersConnected() > 0) {
-                    ESP_LOGD(TAG, "available_current_ %d\r\n", twc->available_current_);
                     for (uint8_t i = 0; i < twc->ChargersConnected(); i++) {
 
                         if (twc->available_current_ >= 6.0) { twc->SendHeartbeat(twc->chargers[i]->twcid); };
