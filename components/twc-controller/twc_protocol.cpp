@@ -237,6 +237,7 @@ namespace esphome {
         void TeslaController::SetCurrent(uint8_t current) {
             if (available_current_ != current) {
                 ESP_LOGD(TAG, "Received current change message, new current %d\r\n", current);
+                ESP_LOGD(TAG, "min_current_ %d\r\n", min_current_);
                 current_changed_ = true;
             }
 
