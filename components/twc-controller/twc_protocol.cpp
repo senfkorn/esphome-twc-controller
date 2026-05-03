@@ -90,26 +90,28 @@ namespace esphome {
                         if (twc->current_changed_ == true) { twc->current_changed_ = false; };
 
                         vTaskDelay(500+random(50,100)/portTICK_PERIOD_MS);
-
-                        switch (commandNumber) {
-                            case 0:
-                                twc->SendCommand(GET_VIN_FIRST, twc->chargers[i]->twcid);
-                                break;
-                            case 1:
-                                twc->SendCommand(GET_VIN_MIDDLE, twc->chargers[i]->twcid);
-                                break;
-                            case 2:
-                                twc->SendCommand(GET_VIN_LAST, twc->chargers[i]->twcid);
-                                break;
-                            case 3:
-                                twc->SendCommand(GET_SERIAL_NUMBER, twc->chargers[i]->twcid);
-                                break;
-                            case 4:
-                                twc->SendCommand(GET_PWR_STATE, twc->chargers[i]->twcid);
-                                break;
-                            case 5:
-                                twc->SendCommand(GET_FIRMWARE_VER_EXT, twc->chargers[i]->twcid);
-                                break;
+                        
+                        if (twc->available_current_ >= 6.0) {
+                            switch (commandNumber) {
+                                case 0:
+                                    twc->SendCommand(GET_VIN_FIRST, twc->chargers[i]->twcid);
+                                    break;
+                                case 1:
+                                    twc->SendCommand(GET_VIN_MIDDLE, twc->chargers[i]->twcid);
+                                    break;
+                                case 2:
+                                    twc->SendCommand(GET_VIN_LAST, twc->chargers[i]->twcid);
+                                    break;
+                                case 3:
+                                    twc->SendCommand(GET_SERIAL_NUMBER, twc->chargers[i]->twcid);
+                                    break;
+                                case 4:
+                                    twc->SendCommand(GET_PWR_STATE, twc->chargers[i]->twcid);
+                                    break;
+                                case 5:
+                                    twc->SendCommand(GET_FIRMWARE_VER_EXT, twc->chargers[i]->twcid);
+                                    break;
+                            }
                         }
                         vTaskDelay(1000+random(100,200)/portTICK_PERIOD_MS);
                     }
